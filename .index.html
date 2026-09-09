@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Getting to Know Kimmy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DESIGN TOKENS — edit here to reskin the whole site
+   ============================================================ */
+:root{
+  --paper:#FAF4E8;
+  --paper-2:#F2E9D8;
+  --card:#FFFCF5;
+  --ink:#2B241C;
+  --ink-soft:#5C5245;
+  --teal:#1F5C56;
+  --teal-deep:#123B37;
+  --teal-tint:#DCEAE6;
+  --gold:#E0A233;
+  --gold-tint:#FBEBC9;
+  --rose:#CE6F5E;
+  --rose-tint:#F6E0D9;
+  --sage:#7E9B76;
+  --sage-tint:#E4EBDE;
+  --line:#E3D8C2;
+  --shadow:0 10px 30px rgba(43,36,28,.10);
+  --shadow-lg:0 24px 60px rgba(18,59,55,.18);
+  --r-sm:10px;
+  --r-md:18px;
+  --r-lg:28px;
+  --serif:'Fraunces',serif;
+  --sans:'Work Sans',sans-serif;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  font-family:var(--sans);
+  background:var(--paper);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img,svg{max-width:100%;display:block;}
+button{font-family:inherit;cursor:pointer;}
+h1,h2,h3,h4{font-family:var(--serif);margin:0;line-height:1.05;font-weight:600;color:var(--teal-deep);}
+p{margin:0;line-height:1.6;color:var(--ink-soft);}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px;}
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;scroll-behavior:auto !important;}
+}
+ 
+/* ---------- layout shell ---------- */
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px;}
+.section{display:none;padding:96px 0 120px;}
+.section.active{display:block;animation:fadeIn .5s ease both;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+.kicker{font-family:var(--sans);font-weight:600;letter-spacing:.02em;color:var(--rose);font-size:14px;margin-bottom:10px;}
+.section h2{font-size:clamp(30px,4.5vw,48px);max-width:16ch;}
+.section > .wrap > p.lede{font-size:19px;max-width:56ch;margin-top:16px;}
+ 
+/* ---------- nav ---------- */
+header.topnav{
+  position:sticky;top:0;z-index:80;
+  background:rgba(250,244,232,.88);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.navbar{max-width:1100px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px;}
+.brand{font-family:var(--serif);font-weight:700;font-size:20px;color:var(--teal-deep);white-space:nowrap;}
+.navlinks{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;}
+.navlinks button{
+  background:none;border:none;padding:9px 14px;border-radius:999px;
+  font-size:14.5px;font-weight:600;color:var(--ink-soft);
+  transition:background .2s,color .2s;
+}
+.navlinks button:hover{background:var(--teal-tint);color:var(--teal-deep);}
+.navlinks button.current{background:var(--teal);color:#fff;}
+.navtoggle{display:none;background:var(--teal);color:#fff;border:none;border-radius:10px;padding:8px 12px;font-weight:700;}
+@media(max-width:900px){
+  .navlinks{display:none;width:100%;justify-content:flex-start;padding-top:10px;}
+  .navlinks.open{display:flex;}
+  .navbar{flex-wrap:wrap;}
+  .navtoggle{display:block;}
+}
+ 
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:14px 26px;border-radius:999px;border:none;
+  font-weight:700;font-size:15.5px;
+  background:var(--teal);color:#fff;
+  box-shadow:var(--shadow);
+  transition:transform .18s ease, box-shadow .18s ease, background .2s;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg);}
+.btn:active{transform:translateY(0);}
+.btn.gold{background:var(--gold);color:var(--ink);}
+.btn.rose{background:var(--rose);color:#fff;}
+.btn.ghost{background:transparent;color:var(--teal-deep);box-shadow:none;border:2px solid var(--teal-deep);}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none;}
+ 
+/* ---------- HOME ---------- */
+.hero{padding-top:56px;display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center;}
+@media(max-width:860px){.hero{grid-template-columns:1fr;gap:36px;}}
+.hero h1{font-size:clamp(38px,6vw,64px);}
+.hero .subtitle{margin-top:18px;font-size:19px;max-width:44ch;}
+.hero-cta{margin-top:34px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
+.prompt-line{margin-top:44px;font-family:var(--serif);font-style:italic;font-size:22px;color:var(--rose);min-height:32px;}
+.prompt-line::after{content:'';display:inline-block;width:2px;height:22px;background:var(--rose);margin-left:4px;animation:blink 1s steps(1) infinite;vertical-align:-4px;}
+@keyframes blink{50%{opacity:0;}}
+ 
+.hero-photo{position:relative;}
+.photo-frame{
+  aspect-ratio:4/5;border-radius:var(--r-lg);
+  background:linear-gradient(150deg,var(--teal-tint),var(--gold-tint));
+  border:2px dashed var(--teal);
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  color:var(--teal-deep);font-weight:600;padding:28px;box-shadow:var(--shadow-lg);
+  position:relative;overflow:hidden;
+}
+.photo-frame span{background:#fff9;padding:10px 16px;border-radius:10px;font-size:14px;}
+.float-icon{
+  position:absolute;font-size:26px;background:var(--card);
+  width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  box-shadow:var(--shadow);animation:floaty 5s ease-in-out infinite;
+}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-14px) rotate(6deg);}}
+ 
+/* quick fact flip cards */
+.quickfacts{margin-top:70px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+@media(max-width:760px){.quickfacts{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:480px){.quickfacts{grid-template-columns:1fr;}}
+.flipcard{perspective:1200px;height:140px;}
+.flipcard-inner{position:relative;width:100%;height:100%;transition:transform .6s cubic-bezier(.4,.2,.2,1);transform-style:preserve-3d;}
+.flipcard:hover .flipcard-inner,.flipcard:focus-within .flipcard-inner{transform:rotateY(180deg);}
+.flipcard button{all:unset;width:100%;height:100%;display:block;}
+.flip-face{position:absolute;inset:0;border-radius:var(--r-md);backface-visibility:hidden;display:flex;align-items:center;justify-content:center;text-align:center;padding:16px;font-weight:600;box-shadow:var(--shadow);}
+.flip-front{background:var(--card);font-family:var(--serif);font-size:18px;color:var(--teal-deep);border:1px solid var(--line);}
+.flip-back{background:var(--teal);color:#fff;transform:rotateY(180deg);font-size:14.5px;font-weight:500;line-height:1.5;}
+ 
+/* ---------- STORY timeline ---------- */
+.route-map{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:34px 0 54px;padding:20px 22px;background:var(--card);border-radius:var(--r-md);box-shadow:var(--shadow);}
+.route-stop{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--teal-deep);font-size:14.5px;}
+.route-dot{width:12px;height:12px;border-radius:50%;background:var(--rose);}
+.route-arrow{color:var(--gold);font-size:18px;}
+.timeline{position:relative;margin-top:20px;padding-left:34px;}
+.timeline::before{content:'';position:absolute;left:9px;top:6px;bottom:6px;width:2px;background:var(--line);}
+.tl-item{position:relative;margin-bottom:14px;}
+.tl-dot{position:absolute;left:-34px;top:22px;width:20px;height:20px;border-radius:50%;background:var(--paper);border:3px solid var(--rose);}
+.tl-btn{
+  all:unset;display:block;width:100%;cursor:pointer;background:var(--card);
+  border:1px solid var(--line);border-radius:var(--r-md);padding:20px 24px;
+  box-shadow:var(--shadow);transition:border-color .2s;
+}
+.tl-btn:hover{border-color:var(--rose);}
+.tl-head{display:flex;justify-content:space-between;align-items:center;gap:12px;}
+.tl-head h3{font-size:21px;}
+.tl-plus{font-size:22px;color:var(--rose);transition:transform .3s;flex:none;}
+.tl-item.open .tl-plus{transform:rotate(45deg);}
+.tl-body{max-height:0;overflow:hidden;transition:max-height .4s ease;}
+.tl-item.open .tl-body{max-height:400px;}
+.tl-body-in{padding:16px 24px 4px;display:grid;grid-template-columns:120px 1fr;gap:16px;}
+@media(max-width:560px){.tl-body-in{grid-template-columns:1fr;}}
+.mini-photo{aspect-ratio:1/1;border-radius:12px;background:var(--gold-tint);border:2px dashed var(--gold);display:flex;align-items:center;justify-content:center;font-size:11px;text-align:center;color:var(--ink-soft);padding:6px;}
+ 
+/* ---------- SCHOLAR ---------- */
+.cred-row{display:flex;gap:16px;flex-wrap:wrap;margin:28px 0 50px;}
+.cred-pill{background:var(--teal-tint);color:var(--teal-deep);font-weight:600;font-size:14px;padding:10px 18px;border-radius:999px;}
+.research-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+@media(max-width:900px){.research-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:520px){.research-grid{grid-template-columns:1fr;}}
+.rcard{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r-md);
+  padding:22px 20px;min-height:150px;box-shadow:var(--shadow);cursor:pointer;
+  transition:transform .2s, box-shadow .2s;
+}
+.rcard:hover,.rcard.open{transform:translateY(-4px);box-shadow:var(--shadow-lg);}
+.rcard h4{font-size:17px;color:var(--teal-deep);}
+.rcard p{margin-top:10px;font-size:14px;max-height:0;overflow:hidden;transition:max-height .3s;}
+.rcard.open p{max-height:200px;}
+ 
+.dayflow{margin-top:70px;}
+.flow-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:26px;}
+.flow-step{
+  background:var(--card);border:1px solid var(--line);border-radius:999px;
+  padding:12px 20px;font-weight:600;font-size:14.5px;color:var(--teal-deep);
+  opacity:0;transform:translateY(16px);transition:opacity .5s,transform .5s;box-shadow:var(--shadow);
+}
+.flow-step.shown{opacity:1;transform:translateY(0);}
+.flow-arrow{align-self:center;color:var(--gold);font-size:18px;}
+ 
+.photogrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:60px;}
+@media(max-width:760px){.photogrid{grid-template-columns:repeat(2,1fr);}}
+.pg-item{aspect-ratio:1/1;border-radius:var(--r-md);background:var(--sage-tint);border:2px dashed var(--sage);display:flex;align-items:center;justify-content:center;font-size:12px;text-align:center;color:var(--ink-soft);padding:10px;}
+ 
+/* ---------- OUTSIDE THE LAB ---------- */
+.hobby-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:30px;}
+@media(max-width:900px){.hobby-grid{grid-template-columns:repeat(2,1fr);}}
+.hobby-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-md);padding:24px 20px;box-shadow:var(--shadow);cursor:pointer;transition:transform .2s;}
+.hobby-card:hover{transform:translateY(-4px);}
+.hobby-emoji{font-size:30px;}
+.hobby-card h4{margin-top:12px;font-size:17px;}
+.hobby-panel{margin-top:14px;padding:22px;border-radius:var(--r-md);background:var(--rose-tint);display:none;}
+.hobby-panel.open{display:block;animation:fadeIn .35s ease both;}
+.hobby-panel .mini-photo{width:140px;margin-top:14px;}
+ 
+.wkr{margin-top:80px;}
+.wkr-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:30px;margin-top:24px;box-shadow:var(--shadow);}
+.wkr-q{font-family:var(--serif);font-size:20px;margin-bottom:18px;color:var(--teal-deep);}
+.wkr-options{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+@media(max-width:560px){.wkr-options{grid-template-columns:1fr;}}
+.wkr-opt{border:2px solid var(--line);background:var(--paper-2);border-radius:var(--r-sm);padding:16px;font-weight:600;text-align:center;transition:border-color .2s,background .2s;}
+.wkr-opt:hover{border-color:var(--gold);}
+.wkr-opt.right{background:var(--sage-tint);border-color:var(--sage);}
+.wkr-opt.wrong{background:var(--rose-tint);border-color:var(--rose);opacity:.7;}
+.wkr-reveal{margin-top:14px;font-weight:600;color:var(--teal-deep);min-height:20px;}
+.wkr-nav{margin-top:20px;display:flex;justify-content:space-between;align-items:center;}
+.wkr-progress{font-size:13px;color:var(--ink-soft);font-weight:600;}
+ 
+/* ---------- FOOD ---------- */
+.food-gallery{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:30px;}
+@media(max-width:900px){.food-gallery{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:560px){.food-gallery{grid-template-columns:repeat(2,1fr);}}
+.food-gallery .pg-item{background:var(--gold-tint);border-color:var(--gold);}
+ 
+.plate-game{margin-top:80px;display:grid;grid-template-columns:1fr 1.1fr;gap:40px;align-items:start;}
+@media(max-width:860px){.plate-game{grid-template-columns:1fr;}}
+.pantry{display:flex;flex-wrap:wrap;gap:10px;}
+.food-chip{
+  background:var(--card);border:1px solid var(--line);border-radius:999px;
+  padding:10px 16px;font-weight:600;font-size:14px;cursor:grab;box-shadow:var(--shadow);
+  user-select:none;
+}
+.food-chip:active{cursor:grabbing;}
+.food-chip.placed{opacity:.35;pointer-events:none;}
+.plate-zone{
+  aspect-ratio:1/1;border-radius:50%;
+  background:radial-gradient(circle at 50% 45%,#fff 0 55%,var(--paper-2) 56% 100%);
+  border:6px solid var(--card);box-shadow:var(--shadow-lg);
+  display:flex;flex-wrap:wrap;align-content:center;justify-content:center;gap:8px;padding:30px;
+  transition:outline .2s;
+}
+.plate-zone.dragover{outline:4px dashed var(--gold);}
+.plate-chip{background:var(--sage-tint);border:1px solid var(--sage);border-radius:999px;padding:7px 13px;font-size:13px;font-weight:600;}
+.plate-actions{margin-top:20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;}
+.plate-verdict{margin-top:14px;font-family:var(--serif);font-size:20px;color:var(--teal-deep);min-height:28px;}
+ 
+/* ---------- FAVORITES ---------- */
+.fav-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:26px;}
+.fav-tab{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:9px 18px;font-weight:600;font-size:14px;color:var(--ink-soft);}
+.fav-tab.current{background:var(--gold);color:var(--ink);border-color:var(--gold);}
+.fav-panel{display:none;margin-top:26px;}
+.fav-panel.current{display:block;animation:fadeIn .35s ease both;}
+.fav-list{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:640px){.fav-list{grid-template-columns:1fr;}}
+.fav-item{background:var(--card);border:1px solid var(--line);border-radius:var(--r-sm);padding:16px 18px;font-size:14.5px;}
+.fav-item b{color:var(--teal-deep);}
+.fav-answer{display:block;margin-top:4px;color:var(--rose);font-weight:700;font-family:var(--serif);font-size:16px;}
+.randomfact{margin-top:60px;background:var(--teal);color:#fff;border-radius:var(--r-lg);padding:36px;text-align:center;}
+.randomfact p{color:#fff;font-family:var(--serif);font-size:22px;font-style:italic;min-height:60px;display:flex;align-items:center;justify-content:center;}
+ 
+/* ---------- QUIZ / FINALE ---------- */
+.progressbar{height:10px;border-radius:999px;background:var(--paper-2);overflow:hidden;margin:26px 0 10px;border:1px solid var(--line);}
+.progressbar-fill{height:100%;background:linear-gradient(90deg,var(--rose),var(--gold));width:0%;transition:width .4s ease;}
+.stage{display:none;}
+.stage.current{display:block;animation:fadeIn .4s ease both;}
+.qcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:30px;box-shadow:var(--shadow);max-width:640px;margin:0 auto;}
+.qcard h3{font-size:22px;margin-bottom:20px;}
+.qopt{display:block;width:100%;text-align:left;background:var(--paper-2);border:2px solid var(--line);border-radius:var(--r-sm);padding:14px 18px;margin-bottom:10px;font-weight:600;font-size:15px;transition:border-color .2s,background .2s;}
+.qopt:hover{border-color:var(--gold);}
+.qopt.correct{background:var(--sage-tint);border-color:var(--sage);}
+.qopt.incorrect{background:var(--rose-tint);border-color:var(--rose);}
+.qfeedback{margin-top:16px;font-weight:700;color:var(--teal-deep);min-height:20px;}
+.quizfoot{display:flex;justify-content:space-between;align-items:center;margin-top:22px;font-size:13px;color:var(--ink-soft);font-weight:600;}
+.resultbox{text-align:center;max-width:520px;margin:0 auto;background:var(--card);border-radius:var(--r-lg);padding:40px;box-shadow:var(--shadow-lg);}
+ 
+/* kitchen */
+.kitchen{max-width:820px;margin:0 auto;}
+.dish-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px;}
+@media(max-width:640px){.dish-grid{grid-template-columns:1fr;}}
+.dish-opt{background:var(--card);border:2px solid var(--line);border-radius:var(--r-md);padding:22px 16px;text-align:center;font-weight:700;color:var(--teal-deep);box-shadow:var(--shadow);}
+.dish-opt:hover{border-color:var(--gold);}
+.recipe-card{background:var(--card);border-radius:var(--r-lg);padding:30px;box-shadow:var(--shadow);margin-top:20px;}
+.recipe-cols{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:16px;}
+@media(max-width:640px){.recipe-cols{grid-template-columns:1fr;}}
+.recipe-cols ul{margin:0;padding-left:20px;color:var(--ink-soft);}
+.recipe-cols li{margin-bottom:6px;}
+.video-ph{aspect-ratio:16/9;border-radius:var(--r-md);background:var(--rose-tint);border:2px dashed var(--rose);display:flex;align-items:center;justify-content:center;text-align:center;color:var(--ink-soft);font-weight:600;font-size:14px;padding:20px;margin-top:16px;}
+ 
+.stove-area{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:24px;align-items:start;}
+@media(max-width:760px){.stove-area{grid-template-columns:1fr;}}
+.ingredient-bank{display:flex;flex-wrap:wrap;gap:10px;}
+.ing-chip{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:9px 15px;font-weight:600;font-size:13.5px;cursor:grab;box-shadow:var(--shadow);user-select:none;}
+.ing-chip.used{opacity:.3;pointer-events:none;}
+.pot-wrap{text-align:center;}
+.pot{
+  width:220px;height:170px;margin:0 auto;border-radius:0 0 90px 90px;
+  background:linear-gradient(180deg,#3a3a3a,#232323);position:relative;
+  border:8px solid #191919;display:flex;align-items:flex-end;justify-content:center;
+  transition:outline .2s;
+}
+.pot.dragover{outline:4px dashed var(--gold);}
+.pot-liquid{width:88%;height:0%;background:linear-gradient(180deg,#E3A72C,#B97A1F);border-radius:0 0 70px 70px;transition:height .3s;}
+.steam{position:absolute;top:-40px;left:50%;transform:translateX(-50%);font-size:26px;opacity:0;transition:opacity .3s;}
+.steam.on{opacity:.8;animation:steamrise 2.4s ease-in-out infinite;}
+@keyframes steamrise{0%{transform:translate(-50%,0) scale(1);opacity:.8;}100%{transform:translate(-50%,-30px) scale(1.4);opacity:0;}}
+.pot-handle{position:absolute;top:8px;width:22px;height:14px;background:#191919;border-radius:4px;}
+.checklist{margin-top:16px;text-align:left;max-width:220px;margin-left:auto;margin-right:auto;font-size:13.5px;}
+.checklist li{list-style:none;color:var(--ink-soft);padding:2px 0;}
+.checklist li.done{color:var(--sage);font-weight:700;text-decoration:line-through;}
+.cookhint{margin-top:16px;font-weight:600;color:var(--rose);min-height:20px;}
+ 
+.timer-wrap{text-align:center;margin-top:26px;}
+.timer-pot{width:180px;height:140px;margin:0 auto;position:relative;}
+.simmer-bubble{position:absolute;bottom:10px;width:10px;height:10px;border-radius:50%;background:#fff6;animation:bubble 1.6s ease-in-out infinite;}
+@keyframes bubble{0%{transform:translateY(0);opacity:0;}30%{opacity:1;}100%{transform:translateY(-60px);opacity:0;}}
+ 
+.plating-zone{display:flex;gap:30px;align-items:center;justify-content:center;margin-top:24px;flex-wrap:wrap;}
+.bowl{width:180px;height:120px;border-radius:0 0 90px 90px;background:#fff;border:6px solid var(--card);box-shadow:var(--shadow-lg);display:flex;align-items:flex-end;justify-content:center;padding-bottom:10px;transition:outline .2s;}
+.bowl.dragover{outline:4px dashed var(--gold);}
+.dish-token{background:linear-gradient(180deg,var(--gold),#B97A1F);color:#fff;border-radius:999px;padding:10px 18px;font-weight:700;cursor:grab;box-shadow:var(--shadow);}
+.garnish-row{display:flex;gap:10px;justify-content:center;margin-top:18px;}
+.garnish-btn{background:var(--card);border:2px solid var(--line);border-radius:999px;padding:8px 14px;font-weight:600;font-size:13px;}
+.garnish-btn.on{background:var(--sage-tint);border-color:var(--sage);}
+ 
+.badge-wrap{text-align:center;margin-top:20px;}
+#badgeCanvas{border-radius:50%;box-shadow:var(--shadow-lg);}
+.confetti-piece{position:fixed;top:-20px;width:10px;height:16px;z-index:200;pointer-events:none;animation:confetti-fall linear forwards;}
+@keyframes confetti-fall{to{transform:translateY(110vh) rotate(540deg);opacity:.2;}}
+ 
+/* utility */
+.center{text-align:center;}
+.mt40{margin-top:40px;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:40px;}
+@media(max-width:760px){.two-col{grid-template-columns:1fr;}}
+ 
+footer.site-footer{padding:40px 0 60px;text-align:center;color:var(--ink-soft);font-size:13.5px;}
+</style>
+</head>
+<body>
+ 
+<header class="topnav">
+  <div class="navbar">
+    <div class="brand">Kimmy ✧</div>
+    <button class="navtoggle" id="navToggle" aria-expanded="false" aria-controls="navLinks">Menu</button>
+    <nav class="navlinks" id="navLinks">
+      <button data-target="home" class="current">Home</button>
+      <button data-target="story">My Story</button>
+      <button data-target="scholar">Scholar + Scientist</button>
+      <button data-target="lab">Outside the Lab</button>
+      <button data-target="food">Food Is My Love Language</button>
+      <button data-target="favorites">Favorites + Fun Facts</button>
+      <button data-target="quiz">Test Your Kimmy Knowledge</button>
+    </nav>
+  </div>
+</header>
+ 
+<!-- ============================= HOME ============================= -->
+<section class="section active" id="home">
+  <div class="wrap">
+    <div class="hero">
+      <div>
+        <!-- EDIT KIMMY BIO HERE -->
+        <h1>Hi, I'm Kimmy 👋🏽</h1>
+        <p class="subtitle">Scientist. Food lover. Adventurer. Professional overthinker. Welcome to my little corner of the internet.</p>
+        <div class="prompt-line" id="typewriter"></div>
+        <div class="hero-cta">
+          <button class="btn rose" id="startExploring">Start Exploring →</button>
+        </div>
+      </div>
+      <div class="hero-photo">
+        <div class="photo-frame">
+          <!-- ADD KIMMY PHOTO HERE -->
+          <span>[UPLOAD KIMMY HERO PHOTO HERE]</span>
+        </div>
+        <div class="float-icon" style="top:-14px;left:-14px;animation-delay:.2s;">🔬</div>
+        <div class="float-icon" style="top:20%;right:-22px;animation-delay:1s;">🥾</div>
+        <div class="float-icon" style="bottom:10%;left:-24px;animation-delay:1.8s;">🍲</div>
+        <div class="float-icon" style="bottom:-16px;right:16%;animation-delay:.6s;">🌵</div>
+        <div class="float-icon" style="top:44%;left:44%;animation-delay:2.4s;">📚</div>
+      </div>
+    </div>
+ 
+    <div class="quickfacts">
+      <div class="flipcard"><button aria-label="Born in New York, flip for more">
+        <div class="flipcard-inner">
+          <div class="flip-face flip-front">Born in New York 🗽</div>
+          <div class="flip-face flip-back">Started out on the East Coast before the desert came calling.</div>
+        </div></button></div>
+      <div class="flipcard"><button aria-label="Arizona life, flip for more">
+        <div class="flipcard-inner">
+          <div class="flip-face flip-front">Arizona Life 🌵</div>
+          <div class="flip-face flip-back">Phoenix, then Tucson — the desert is home now.</div>
+        </div></button></div>
+      <div class="flipcard"><button aria-label="Plant-based since childhood, flip for more">
+        <div class="flipcard-inner">
+          <div class="flip-face flip-front">Plant-Based Since Childhood 🌱</div>
+          <div class="flip-face flip-back">Vegan for years, and it shapes almost everything I cook.</div>
+        </div></button></div>
+      <div class="flipcard"><button aria-label="Nutrition scientist, flip for more">
+        <div class="flipcard-inner">
+          <div class="flip-face flip-front">Nutrition Scientist 🔬</div>
+          <div class="flip-face flip-back">PhD student studying nutrition, behavior, and real-world health.</div>
+        </div></button></div>
+      <div class="flipcard"><button aria-label="Cooking equals love, flip for more">
+        <div class="flipcard-inner">
+          <div class="flip-face flip-front">Cooking = Love ❤️</div>
+          <div class="flip-face flip-back">It's how I take care of the people I love.</div>
+        </div></button></div>
+      <div class="flipcard"><button aria-label="Adventure please, flip for more">
+        <div class="flipcard-inner">
+          <div class="flip-face flip-front">Adventure Please 🥾</div>
+          <div class="flip-face flip-back">Give me a trail, a kayak, or somewhere I've never been.</div>
+        </div></button></div>
+    </div>
+  </div>
+</section>
+ 
+<!-- ============================= MY STORY ============================= -->
+<section class="section" id="story">
+  <div class="wrap">
+    <p class="kicker">My Story</p>
+    <h2>A little bit of geography, a lot of curiosity.</h2>
+    <p class="lede">Click any stop on the timeline below to hear the short version of how I got here.</p>
+ 
+    <div class="route-map" aria-hidden="true">
+      <div class="route-stop"><span class="route-dot"></span>New York</div>
+      <span class="route-arrow">→</span>
+      <div class="route-stop"><span class="route-dot"></span>New Jersey</div>
+      <span class="route-arrow">→</span>
+      <div class="route-stop"><span class="route-dot"></span>Phoenix</div>
+      <span class="route-arrow">→</span>
+      <div class="route-stop"><span class="route-dot"></span>Tucson</div>
+    </div>
+ 
+    <div class="timeline" id="timeline">
+      <!-- CHANGE TIMELINE STORY TEXT HERE -->
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <button class="tl-btn" type="button">
+          <div class="tl-head"><h3>New York Beginnings</h3><span class="tl-plus">+</span></div>
+          <div class="tl-body"><div class="tl-body-in">
+            <div class="mini-photo">[UPLOAD CHILDHOOD PHOTO]</div>
+            <p>My name is Kimberly, but I've gone by Kimmy for as long as I can remember. I was born in New York, and that's where the story starts — a Haitian American kid asking a lot of questions early on.</p>
+          </div></div>
+        </button>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <button class="tl-btn" type="button">
+          <div class="tl-head"><h3>New Jersey Chapter</h3><span class="tl-plus">+</span></div>
+          <div class="tl-body"><div class="tl-body-in">
+            <div class="mini-photo">[UPLOAD NY/NJ PHOTO]</div>
+            <p>Before the desert, there was New Jersey — the chapter where a lot of who I am started to take shape.</p>
+          </div></div>
+        </button>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <button class="tl-btn" type="button">
+          <div class="tl-head"><h3>Hello, Arizona</h3><span class="tl-plus">+</span></div>
+          <div class="tl-body"><div class="tl-body-in">
+            <div class="mini-photo">[UPLOAD ARIZONA PHOTO]</div>
+            <p>Arizona wasn't where I expected to end up, but it became one of the most important parts of my adult life.</p>
+          </div></div>
+        </button>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <button class="tl-btn" type="button">
+          <div class="tl-head"><h3>Phoenix Era</h3><span class="tl-plus">+</span></div>
+          <div class="tl-body"><div class="tl-body-in">
+            <div class="mini-photo">[UPLOAD ARIZONA PHOTO]</div>
+            <p>I spent several years in Phoenix, building a life and figuring out what I actually wanted to study and do.</p>
+          </div></div>
+        </button>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <button class="tl-btn" type="button">
+          <div class="tl-head"><h3>Tucson + Graduate School</h3><span class="tl-plus">+</span></div>
+          <div class="tl-body"><div class="tl-body-in">
+            <div class="mini-photo">[UPLOAD GRADUATION PHOTO]</div>
+            <p>Eventually I made my way to Tucson, where I earned my B.S. in Nutritional Sciences and am now pursuing my PhD — asking research questions for a living.</p>
+          </div></div>
+        </button>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <button class="tl-btn" type="button">
+          <div class="tl-head"><h3>What Comes Next?</h3><span class="tl-plus">+</span></div>
+          <div class="tl-body"><div class="tl-body-in">
+            <div class="mini-photo">[UPLOAD YOUR OWN PHOTO]</div>
+            <p>I love learning, exploring, creating, and understanding why people behave the way they do — so whatever's next probably involves all four.</p>
+          </div></div>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- ============================= SCHOLAR + SCIENTIST ============================= -->
+<section class="section" id="scholar">
+  <div class="wrap">
+    <p class="kicker">Scholar + Scientist</p>
+    <h2>I Ask A Lot of Questions for a Living.</h2>
+    <div class="cred-row">
+      <span class="cred-pill">B.S. in Nutritional Sciences, University of Arizona</span>
+      <span class="cred-pill">PhD student, Nutritional Sciences &amp; Wellness, U of A</span>
+      <span class="cred-pill">Graduate Teaching Assistant</span>
+      <span class="cred-pill">Clinical Research Experience</span>
+    </div>
+ 
+    <p class="lede" style="margin-bottom:8px;">Click a card to see what it actually means in my day-to-day.</p>
+    <div class="research-grid" id="researchGrid">
+      <!-- CHANGE RESEARCH CARD TEXT HERE -->
+      <div class="rcard" tabindex="0" data-more="I'm interested in why people do — or don't — change how they eat and move, and what actually helps that stick.">
+        <h4>Nutrition Behavior</h4><p>I'm interested in why people do — or don't — change how they eat and move, and what actually helps that stick.</p>
+      </div>
+      <div class="rcard" tabindex="0" data-more="Movement and nutrition are tangled together — I look at how physical activity fits into overall health.">
+        <h4>Physical Activity</h4><p>Movement and nutrition are tangled together — I look at how physical activity fits into overall health.</p>
+      </div>
+      <div class="rcard" tabindex="0" data-more="I help coordinate and run clinical trials, from recruiting participants to collecting data.">
+        <h4>Clinical Trials</h4><p>I help coordinate and run clinical trials, from recruiting participants to collecting data.</p>
+      </div>
+      <div class="rcard" tabindex="0" data-more="A lot of my work touches on cardiometabolic health — how nutrition affects heart and metabolic outcomes.">
+        <h4>Cardiometabolic Health</h4><p>A lot of my work touches on cardiometabolic health — how nutrition affects heart and metabolic outcomes.</p>
+      </div>
+      <div class="rcard" tabindex="0" data-more="Chronic disease doesn't happen overnight, and neither does prevention — I care about the long game.">
+        <h4>Chronic Disease</h4><p>Chronic disease doesn't happen overnight, and neither does prevention — I care about the long game.</p>
+      </div>
+      <div class="rcard" tabindex="0" data-more="Understanding behavior change is basically my whole research personality.">
+        <h4>Behavior Change</h4><p>Understanding behavior change is basically my whole research personality.</p>
+      </div>
+      <div class="rcard" tabindex="0" data-more="Working directly with research participants keeps the science grounded in real people.">
+        <h4>Human Research</h4><p>Working directly with research participants keeps the science grounded in real people.</p>
+      </div>
+      <div class="rcard" tabindex="0" data-more="I love applying nutrition science to real-world settings, not just theory.">
+        <h4>Real-World Interventions</h4><p>I love applying nutrition science to real-world settings, not just theory.</p>
+      </div>
+    </div>
+ 
+    <div class="dayflow">
+      <h3>What I Actually Do in Research</h3>
+      <div class="flow-row" id="flowRow">
+        <div class="flow-step">Recruit participants</div><div class="flow-arrow">→</div>
+        <div class="flow-step">Collect data</div><div class="flow-arrow">→</div>
+        <div class="flow-step">Coordinate clinical visits</div><div class="flow-arrow">→</div>
+        <div class="flow-step">Work with research teams</div><div class="flow-arrow">→</div>
+        <div class="flow-step">Analyze scientific questions</div><div class="flow-arrow">→</div>
+        <div class="flow-step">Read way too many papers</div><div class="flow-arrow">→</div>
+        <div class="flow-step">Teach</div><div class="flow-arrow">→</div>
+        <div class="flow-step">Repeat</div>
+      </div>
+    </div>
+ 
+    <div class="photogrid">
+      <div class="pg-item">[UPLOAD LAB PHOTO]</div>
+      <div class="pg-item">[UPLOAD CAMPUS PHOTO]</div>
+      <div class="pg-item">[UPLOAD RESEARCH PHOTO]</div>
+      <div class="pg-item">[UPLOAD GRADUATION PHOTO]</div>
+    </div>
+  </div>
+</section>
+ 
+<!-- ============================= OUTSIDE THE LAB ============================= -->
+<section class="section" id="lab">
+  <div class="wrap">
+    <p class="kicker">Outside the Lab</p>
+    <h2>There Is Life Outside Research. I Promise.</h2>
+ 
+    <div class="hobby-grid" id="hobbyGrid">
+      <!-- CHANGE HOBBY TEXT HERE -->
+      <div>
+        <div class="hobby-card" data-panel="p-hike"><div class="hobby-emoji">🥾</div><h4>Hiking</h4></div>
+        <div class="hobby-panel" id="p-hike">
+          <p style="font-family:var(--serif);font-style:italic;color:var(--teal-deep);font-size:16px;">"Give me a trail, good weather, and a view."</p>
+          <div class="mini-photo">[UPLOAD HIKING PHOTO]</div>
+        </div>
+      </div>
+      <div>
+        <div class="hobby-card" data-panel="p-kayak"><div class="hobby-emoji">🛶</div><h4>Kayaking</h4></div>
+        <div class="hobby-panel" id="p-kayak">
+          <p style="font-family:var(--serif);font-style:italic;color:var(--teal-deep);font-size:16px;">"Water + quiet + adventure = yes."</p>
+          <div class="mini-photo">[UPLOAD KAYAKING PHOTO]</div>
+        </div>
+      </div>
+      <div>
+        <div class="hobby-card" data-panel="p-art"><div class="hobby-emoji">🎨</div><h4>Art + Music</h4></div>
+        <div class="hobby-panel" id="p-art">
+          <p style="font-family:var(--serif);font-style:italic;color:var(--teal-deep);font-size:16px;">"I love spaces where people create things."</p>
+          <div class="mini-photo">[UPLOAD ART OR CONCERT PHOTO]</div>
+        </div>
+      </div>
+      <div>
+        <div class="hobby-card" data-panel="p-write"><div class="hobby-emoji">✍️</div><h4>Writing</h4></div>
+        <div class="hobby-panel" id="p-write">
+          <p style="font-family:var(--serif);font-style:italic;color:var(--teal-deep);font-size:16px;">"Somewhere between scientific writing and creative writing lives my brain."</p>
+          <div class="mini-photo">[UPLOAD WRITING PHOTO]</div>
+        </div>
+      </div>
+    </div>
+ 
+    <div class="wkr">
+      <h3>Would Kimmy Rather…</h3>
+      <p class="lede">Tap the option you think I'd pick.</p>
+      <div class="wkr-card">
+        <div class="wkr-q" id="wkrQ"></div>
+        <div class="wkr-options" id="wkrOptions"></div>
+        <div class="wkr-reveal" id="wkrReveal"></div>
+        <div class="wkr-nav">
+          <span class="wkr-progress" id="wkrProgress"></span>
+          <button class="btn ghost" id="wkrNext" style="display:none;">Next →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- ============================= FOOD ============================= -->
+<section class="section" id="food">
+  <div class="wrap">
+    <p class="kicker">Food Is My Love Language</p>
+    <h2>Food Is My Love Language.</h2>
+    <!-- EDIT FOOD INTRO HERE -->
+    <p class="lede">I've eaten plant-based since childhood and have been vegan for years. Cooking is one of the ways I care for people, express creativity, and connect with others.</p>
+ 
+    <div class="food-gallery">
+      <div class="pg-item">[UPLOAD FAVORITE DISH PHOTO 1]</div>
+      <div class="pg-item">[UPLOAD FAVORITE DISH PHOTO 2]</div>
+      <div class="pg-item">[UPLOAD FAVORITE DISH PHOTO 3]</div>
+      <div class="pg-item">[UPLOAD COOKING PHOTO]</div>
+      <div class="pg-item">[UPLOAD FOOD WITH FRIENDS PHOTO]</div>
+    </div>
+ 
+    <div class="plate-game">
+      <div>
+        <h3>Build Kimmy a Plate</h3>
+        <p class="lede" style="margin-top:10px;">Drag ingredients onto the plate — some are very Kimmy, some... are not.</p>
+        <div class="pantry" id="pantry"><!-- CHANGE FOOD ITEMS HERE --></div>
+        <div class="plate-actions">
+          <button class="btn gold" id="scorePlate">See My Verdict</button>
+          <button class="btn ghost" id="resetPlate">Start Over</button>
+        </div>
+        <div class="plate-verdict" id="plateVerdict"></div>
+      </div>
+      <div class="plate-zone" id="plateZone" aria-label="Drop foods here to build Kimmy's plate"></div>
+    </div>
+  </div>
+</section>
+ 
+<!-- ============================= FAVORITES ============================= -->
+<section class="section" id="favorites">
+  <div class="wrap">
+    <p class="kicker">Favorites + Fun Facts</p>
+    <h2>The Kimmy Encyclopedia.</h2>
+    <div class="fav-tabs" id="favTabs">
+      <button class="fav-tab current" data-fav="personality">Personality</button>
+      <button class="fav-tab" data-fav="foodfav">Food</button>
+      <button class="fav-tab" data-fav="adventure">Adventure</button>
+      <button class="fav-tab" data-fav="school">School</button>
+      <button class="fav-tab" data-fav="research">Research</button>
+      <button class="fav-tab" data-fav="random">Random Facts</button>
+    </div>
+ 
+    <!-- CHANGE FAVORITE ANSWERS HERE -->
+    <div class="fav-panel current" id="fav-personality">
+      <div class="fav-list">
+        <div class="fav-item"><b>Preferred name:</b><span class="fav-answer">Kimmy</span></div>
+        <div class="fav-item"><b>Background:</b><span class="fav-answer">Haitian American</span></div>
+        <div class="fav-item"><b>Biggest pet peeve:</b><span class="fav-answer">[ADD ANSWER]</span></div>
+        <div class="fav-item"><b>Something most people would never guess:</b><span class="fav-answer">[ADD ANSWER]</span></div>
+      </div>
+    </div>
+    <div class="fav-panel" id="fav-foodfav">
+      <div class="fav-list">
+        <div class="fav-item"><b>Diet:</b><span class="fav-answer">Vegan</span></div>
+        <div class="fav-item"><b>Favorite vegan meal:</b><span class="fav-answer">[ADD ANSWER]</span></div>
+        <div class="fav-item"><b>Cooking is:</b><span class="fav-answer">One of my love languages</span></div>
+        <div class="fav-item"><b>Favorite food memory:</b><span class="fav-answer">[ADD ANSWER]</span></div>
+      </div>
+    </div>
+    <div class="fav-panel" id="fav-adventure">
+      <div class="fav-list">
+        <div class="fav-item"><b>Favorite hiking trail:</b><span class="fav-answer">[ADD ANSWER]</span></div>
+        <div class="fav-item"><b>Dream travel destination:</b><span class="fav-answer">[ADD ANSWER]</span></div>
+        <div class="fav-item"><b>Favorite thing about Arizona:</b><span class="fav-answer">[ADD ANSWER]</span></div>
+        <div class="fav-item"><b>Water or trail:</b><span class="fav-answer">[ADD ANSWER]</span></div>
+      </div>
+    </div>
+    <div class="fav-panel" id="fav-school">
+      <div class="fav-list">
+        <div class="fav-item"><b>Degree:</b><span class="fav-answer">B.S., Nutritional Sciences</span></div>
+        <div class="fav-item"><b>Currently:</b><span class="fav-answer">PhD student, Nutritional Sciences &amp; Wellness</span></div>
+        <div class="fav-item"><b>Also does:</b><span class="fav-answer">Graduate Teaching Assistant</span></div>
+        <div class="fav-item"><b>Favorite subject to teach:</b><span class="fav-answer">[ADD ANSWER]</span></div>
+      </div>
+    </div>
+    <div class="fav-panel" id="fav-research">
+      <div class="fav-list">
+        <div class="fav-item"><b>Studies:</b><span class="fav-answer">Nutrition, behavior &amp; human health</span></div>
+        <div class="fav-item"><b>Also works in:</b><span class="fav-answer">Clinical trials</span></div>
+        <div class="fav-item"><b>Favorite part of research:</b><span class="fav-answer">[ADD ANSWER]</span></div>
+        <div class="fav-item"><b>Least favorite part:</b><span class="fav-answer">[ADD ANSWER]</span></div>
+      </div>
+    </div>
+    <div class="fav-panel" id="fav-random">
+      <div class="fav-list">
+        <div class="fav-item"><b>Favorite color:</b><span class="fav-answer">[ADD ANSWER]</span></div>
+        <div class="fav-item"><b>Favorite song:</b><span class="fav-answer">[ADD ANSWER]</span></div>
+        <div class="fav-item"><b>Favorite artist:</b><span class="fav-answer">[ADD ANSWER]</span></div>
+        <div class="fav-item"><b>Favorite movie:</b><span class="fav-answer">[ADD ANSWER]</span></div>
+      </div>
+    </div>
+ 
+    <div class="randomfact">
+      <p id="randomFactText">Click below for a random Kimmy fact.</p>
+      <button class="btn gold" id="randomFactBtn">Reveal Random Kimmy Fact 🎲</button>
+    </div>
+  </div>
+</section>
+ 
+<!-- ============================= QUIZ / FINALE ============================= -->
+<section class="section" id="quiz">
+  <div class="wrap">
+    <p class="kicker">The Grand Finale</p>
+    <h2>So… Were You Actually Paying Attention?</h2>
+    <div class="progressbar"><div class="progressbar-fill" id="quizProgressFill"></div></div>
+ 
+    <!-- STAGE 1: QUICK QUIZ -->
+    <div class="stage current" id="stage1">
+      <div class="qcard" id="quizCard"></div>
+    </div>
+ 
+    <!-- STAGE 1 fail -->
+    <div class="stage" id="stageFail">
+      <div class="qcard resultbox">
+        <h3>Nice try.</h3>
+        <p style="margin-top:10px;">Go snoop around the website again and come back when you're ready.</p>
+        <button class="btn rose" style="margin-top:22px;" id="studyAgainBtn">Study Kimmy Again</button>
+      </div>
+    </div>
+ 
+    <!-- STAGE 2: WOULD KIMMY CHOOSE THIS -->
+    <div class="stage" id="stage2">
+      <div class="qcard" id="stage2Card"></div>
+    </div>
+ 
+    <!-- COOKING GAME -->
+    <div class="stage" id="stage3">
+      <div class="kitchen" id="cookingIntro">
+        <div class="qcard resultbox">
+          <h3>You've learned about Kimmy.</h3>
+          <p style="margin-top:10px;">Now prove you know her well enough to cook for her.</p>
+          <button class="btn gold" style="margin-top:22px;" id="enterKitchenBtn">Enter the Kitchen</button>
+        </div>
+      </div>
+ 
+      <div class="kitchen" id="dishStep" style="display:none;">
+        <h3 class="center">Choose the correct dish</h3>
+        <div class="dish-grid" id="dishGrid"></div>
+        <p class="cookhint center" id="dishHint"></p>
+      </div>
+ 
+      <div class="kitchen" id="recipeStep" style="display:none;">
+        <div class="recipe-card">
+          <!-- CHANGE COOKING CHALLENGE RECIPE HERE -->
+          <h3 id="recipeTitle">Creamy Coconut Chickpea Curry</h3>
+          <div class="recipe-cols">
+            <div>
+              <h4 style="font-size:15px;">Ingredients</h4>
+              <ul>
+                <li>Chickpeas</li><li>Coconut milk</li><li>Spinach</li><li>Tomato</li>
+                <li>Garlic</li><li>Onion</li><li>Curry spices</li><li>Vegetable broth</li>
+                <li>Lime</li><li>Fresh herbs</li>
+              </ul>
+            </div>
+            <div>
+              <h4 style="font-size:15px;">Instructions</h4>
+              <ul>
+                <li>Sauté onion and garlic</li><li>Add curry spices</li><li>Add tomatoes</li>
+                <li>Add chickpeas</li><li>Add coconut milk</li><li>Simmer</li>
+                <li>Add spinach</li><li>Finish with lime + herbs</li>
+              </ul>
+            </div>
+          </div>
+          <div class="video-ph">[UPLOAD 1-MINUTE RECIPE VIDEO HERE]</div>
+          <div class="center mt40">
+            <button class="btn ghost" id="startCookingBtn">Start Cooking →</button>
+          </div>
+        </div>
+      </div>
+ 
+      <div class="kitchen" id="kitchenStep" style="display:none;">
+        <h3 class="center">The Interactive Kitchen</h3>
+        <p class="lede center" style="margin:10px auto 0;">Drag the right ingredients into the pot, in the right order.</p>
+        <div class="stove-area">
+          <div>
+            <h4 style="font-size:15px;margin-bottom:10px;">Pantry</h4>
+            <div class="ingredient-bank" id="ingredientBank"></div>
+            <p class="cookhint" id="orderHint"></p>
+          </div>
+          <div class="pot-wrap">
+            <div class="pot" id="potZone">
+              <div class="pot-handle" style="left:-2px;"></div>
+              <div class="pot-handle" style="right:-2px;"></div>
+              <div class="steam" id="steamEl">💨</div>
+              <div class="pot-liquid" id="potLiquid"></div>
+            </div>
+            <ul class="checklist" id="checklist"></ul>
+          </div>
+        </div>
+      </div>
+ 
+      <div class="kitchen center" id="timerStep" style="display:none;">
+        <h3>Simmering…</h3>
+        <div class="timer-wrap">
+          <div class="timer-pot">
+            <div class="pot" style="margin:0 auto;">
+              <div class="steam on">💨</div>
+              <div class="pot-liquid" style="height:60%;"></div>
+              <div class="simmer-bubble" style="left:40%;animation-delay:0s;"></div>
+              <div class="simmer-bubble" style="left:55%;animation-delay:.5s;"></div>
+              <div class="simmer-bubble" style="left:65%;animation-delay:1s;"></div>
+            </div>
+          </div>
+          <p class="lede center mt40" id="timerLabel">Letting it simmer…</p>
+        </div>
+      </div>
+ 
+      <div class="kitchen center" id="platingStep" style="display:none;">
+        <h3>Plate the dish</h3>
+        <p class="lede center" style="margin:10px auto 0;">Drag the finished curry into the bowl, then pick your garnish.</p>
+        <div class="plating-zone">
+          <div class="dish-token" id="dishToken" draggable="true">Curry ✓</div>
+          <div class="bowl" id="bowlZone"></div>
+        </div>
+        <div class="garnish-row" id="garnishRow">
+          <button class="garnish-btn" data-g="cilantro">Cilantro</button>
+          <button class="garnish-btn" data-g="lime">Lime</button>
+          <button class="garnish-btn" data-g="chili">Chili flakes</button>
+          <button class="garnish-btn" data-g="avocado">Avocado</button>
+        </div>
+        <button class="btn gold mt40" id="judgeBtn" style="display:none;">Serve It Up</button>
+      </div>
+ 
+      <div class="kitchen center" id="judgeStep" style="display:none;">
+        <div class="qcard resultbox">
+          <h3>YOU PASSED 🎉</h3>
+          <p style="margin-top:10px;">You officially know Kimmy well enough to cook for her. Cooking is my love language, so this is basically the highest honor.</p>
+          <div class="badge-wrap">
+            <canvas id="badgeCanvas" width="220" height="220"></canvas>
+            <div style="margin-top:14px;">
+              <button class="btn ghost" id="downloadBadge">Download My Badge</button>
+            </div>
+          </div>
+          <button class="btn rose mt40" id="seeResultsBtn">See Final Results →</button>
+        </div>
+      </div>
+    </div>
+ 
+    <!-- FINAL RESULTS -->
+    <div class="stage" id="stageFinal">
+      <div class="qcard resultbox">
+        <h3>Congratulations. You Survived the Kimmy Experience.</h3>
+        <div style="margin-top:24px;display:grid;gap:10px;text-align:left;max-width:280px;margin-left:auto;margin-right:auto;">
+          <div class="fav-item"><b>Kimmy Knowledge:</b><span class="fav-answer" id="finalQuizScore">—</span></div>
+          <div class="fav-item"><b>Food Compatibility:</b><span class="fav-answer">Excellent</span></div>
+          <div class="fav-item"><b>Cooking Skills:</b><span class="fav-answer">Approved</span></div>
+          <div class="fav-item"><b>Final Status:</b><span class="fav-answer">CERTIFIED KIMMY EXPERT</span></div>
+        </div>
+        <div style="margin-top:30px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+          <button class="btn gold" id="retakeQuizBtn">Take Quiz Again</button>
+          <button class="btn ghost" id="exploreAgainBtn">Explore Website Again</button>
+          <button class="btn" id="returnHomeBtn">Return Home</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<footer class="site-footer">Made with a lot of curry, curiosity, and a little bit of code — thanks for getting to know Kimmy. 🌵</footer>
+ 
+<script>
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+const navButtons = document.querySelectorAll('.navlinks button');
+const sections = document.querySelectorAll('.section');
+function goTo(id){
+  sections.forEach(s=>s.classList.toggle('active', s.id===id));
+  navButtons.forEach(b=>b.classList.toggle('current', b.dataset.target===id));
+  document.getElementById('navLinks').classList.remove('open');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+navButtons.forEach(b=>b.addEventListener('click',()=>goTo(b.dataset.target)));
+document.getElementById('navToggle').addEventListener('click',()=>{
+  document.getElementById('navLinks').classList.toggle('open');
+});
+document.getElementById('startExploring').addEventListener('click',()=>goTo('story'));
+ 
+/* ============================================================
+   HOME — typewriter
+   ============================================================ */
+(function(){
+  const el = document.getElementById('typewriter');
+  const phrase = "Want to know what makes me, me?";
+  let i=0;
+  function type(){
+    if(i<=phrase.length){ el.textContent = phrase.slice(0,i); i++; setTimeout(type,45); }
+  }
+  setTimeout(type,600);
+})();
+ 
+/* ============================================================
+   STORY — timeline accordion
+   ============================================================ */
+document.querySelectorAll('.tl-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    btn.closest('.tl-item').classList.toggle('open');
+  });
+});
+ 
+/* ============================================================
+   SCHOLAR — research cards + sequential flow reveal
+   ============================================================ */
+document.querySelectorAll('.rcard').forEach(c=>{
+  const toggle=()=>c.classList.toggle('open');
+  c.addEventListener('click',toggle);
+  c.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();} });
+});
+const flowSteps = document.querySelectorAll('.flow-step');
+const flowObserver = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      flowSteps.forEach((step,i)=> setTimeout(()=>step.classList.add('shown'), i*160));
+      flowObserver.disconnect();
+    }
+  });
+},{threshold:.3});
+flowObserver.observe(document.querySelector('.dayflow'));
+ 
+/* ============================================================
+   OUTSIDE THE LAB — hobby panels
+   ============================================================ */
+document.querySelectorAll('.hobby-card').forEach(card=>{
+  card.addEventListener('click',()=>{
+    const panel = document.getElementById(card.dataset.panel);
+    const open = panel.classList.contains('open');
+    document.querySelectorAll('.hobby-panel').forEach(p=>p.classList.remove('open'));
+    if(!open) panel.classList.add('open');
+  });
+});
+ 
+/* Would Kimmy Rather game */
+const wkrData = [
+  {q:"Sunrise hike or sleep in?", a:"Sunrise hike", b:"Sleep in", correct:"a"},
+  {q:"Kayaking or shopping?", a:"Kayaking", b:"Shopping", correct:"a"},
+  {q:"Concert or nightclub?", a:"Concert", b:"Nightclub", correct:"a"},
+  {q:"Home-cooked meal or fast food?", a:"Home-cooked meal", b:"Fast food", correct:"a"},
+  {q:"Mountains or city skyline?", a:"Mountains", b:"City skyline", correct:"a"},
+  {q:"Scientific paper or reality TV?", a:"Scientific paper", b:"Reality TV", correct:"a"},
+];
+let wkrIndex=0;
+function renderWkr(){
+  const item = wkrData[wkrIndex];
+  document.getElementById('wkrQ').textContent = item.q;
+  const optsEl = document.getElementById('wkrOptions');
+  optsEl.innerHTML='';
+  ['a','b'].forEach(key=>{
+    const btn=document.createElement('button');
+    btn.className='wkr-opt';
+    btn.textContent=item[key];
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('.wkr-opt').forEach((o,idx)=>{
+        o.classList.add(['a','b'][idx]===item.correct?'right':'wrong');
+      });
+      document.getElementById('wkrReveal').textContent = key===item.correct
+        ? "You know me 😌 — correct!"
+        : `Close! Kimmy would actually pick "${item[item.correct]}."`;
+      document.getElementById('wkrNext').style.display='inline-flex';
+    });
+    optsEl.appendChild(btn);
+  });
+  document.getElementById('wkrReveal').textContent='';
+  document.getElementById('wkrNext').style.display='none';
+  document.getElementById('wkrProgress').textContent = `${wkrIndex+1} / ${wkrData.length}`;
+}
+document.getElementById('wkrNext').addEventListener('click',()=>{
+  wkrIndex = (wkrIndex+1) % wkrData.length;
+  renderWkr();
+});
+renderWkr();
+ 
+/* ============================================================
+   FOOD — build a plate drag & drop
+   ============================================================ */
+const foodItems = [
+  {name:"Chickpeas",kimmy:true},{name:"Lentils",kimmy:true},{name:"Tofu",kimmy:true},
+  {name:"Tempeh",kimmy:true},{name:"Avocado",kimmy:true},{name:"Roasted veggies",kimmy:true},
+  {name:"Fresh herbs",kimmy:true},{name:"Flavorful sauce",kimmy:true},{name:"Fruit",kimmy:true},
+  {name:"Cheeseburger",kimmy:false},{name:"Fried chicken",kimmy:false},{name:"Gummy candy",kimmy:false},
+];
+const pantryEl = document.getElementById('pantry');
+const plateZoneEl = document.getElementById('plateZone');
+let placedItems=[];
+ 
+function buildPantry(){
+  pantryEl.innerHTML='';
+  foodItems.forEach((item,idx)=>{
+    const chip=document.createElement('div');
+    chip.className='food-chip';
+    chip.textContent=item.name;
+    chip.draggable=true;
+    chip.dataset.idx=idx;
+    chip.addEventListener('dragstart',e=>{ e.dataTransfer.setData('text/plain', idx); });
+    pantryEl.appendChild(chip);
+  });
+}
+buildPantry();
+ 
+plateZoneEl.addEventListener('dragover',e=>{ e.preventDefault(); plateZoneEl.classList.add('dragover'); });
+plateZoneEl.addEventListener('dragleave',()=> plateZoneEl.classList.remove('dragover'));
+plateZoneEl.addEventListener('drop',e=>{
+  e.preventDefault();
+  plateZoneEl.classList.remove('dragover');
+  const idx = e.dataTransfer.getData('text/plain');
+  if(idx==='' || placedItems.includes(idx)) return;
+  placedItems.push(idx);
+  const chipEl = pantryEl.querySelector(`.food-chip[data-idx="${idx}"]`);
+  if(chipEl) chipEl.classList.add('placed');
+  const plateChip=document.createElement('div');
+  plateChip.className='plate-chip';
+  plateChip.textContent=foodItems[idx].name;
+  plateZoneEl.appendChild(plateChip);
+});
+ 
+document.getElementById('resetPlate').addEventListener('click',()=>{
+  placedItems=[]; plateZoneEl.innerHTML=''; document.getElementById('plateVerdict').textContent='';
+  buildPantry();
+});
+document.getElementById('scorePlate').addEventListener('click',()=>{
+  if(placedItems.length===0){ document.getElementById('plateVerdict').textContent="The plate's empty — Kimmy's a little worried."; return; }
+  const kimmyCount = placedItems.filter(i=>foodItems[i].kimmy).length;
+  const notKimmy = placedItems.length - kimmyCount;
+  let verdict;
+  if(notKimmy>0 && kimmyCount===0) verdict = "Hmm… have we met?";
+  else if(notKimmy>1) verdict = "Respectfully, try again.";
+  else if(notKimmy===1) verdict = "Pretty good — but where are the vegetables?";
+  else verdict = "Kimmy would absolutely eat this. 🌱";
+  document.getElementById('plateVerdict').textContent = verdict;
+});
+ 
+/* ============================================================
+   FAVORITES — tabs + random fact
+   ============================================================ */
+document.querySelectorAll('.fav-tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('.fav-tab').forEach(t=>t.classList.remove('current'));
+    document.querySelectorAll('.fav-panel').forEach(p=>p.classList.remove('current'));
+    tab.classList.add('current');
+    document.getElementById('fav-'+tab.dataset.fav).classList.add('current');
+  });
+});
+const randomFacts = [
+  "I've been vegan for years — cooking is one of the ways I show people I love them.",
+  "I'm Haitian American, born in New York, and now proudly Tucson-based.",
+  "I chose 'Kimmy' over 'Kimberly' a long time ago and never looked back.",
+  "Give me a kayak and a quiet lake and I am a genuinely happy person.",
+  "I've read way more research papers than I'd like to admit in one week.",
+  "I'm a Graduate Teaching Assistant on top of my PhD research — I really do love to teach.",
+  "Somewhere between scientific writing and creative writing is exactly where my brain lives.",
+];
+let lastFact=-1;
+document.getElementById('randomFactBtn').addEventListener('click',()=>{
+  let idx;
+  do{ idx = Math.floor(Math.random()*randomFacts.length); } while(idx===lastFact && randomFacts.length>1);
+  lastFact=idx;
+  document.getElementById('randomFactText').textContent = randomFacts[idx];
+});
+ 
+/* ============================================================
+   QUIZ — Stage 1
+   ============================================================ */
+const quizQuestions = [
+  {q:"What does Kimberly prefer to be called?", opts:["Kimberly","Kim","Kimmy","Kiki"], correct:2},
+  {q:"Where was Kimmy born?", opts:["New Jersey","New York","Arizona","Florida"], correct:1},
+  {q:"What field is Kimmy pursuing a PhD in?", opts:["Molecular Biology","Nutritional Sciences & Wellness","Clinical Psychology","Public Policy"], correct:1},
+  {q:"Which activity would Kimmy most likely choose?", opts:["Sitting in a casino","Hiking","Fast food run","Staying in bed all day"], correct:1},
+  {q:"How does Kimmy describe cooking?", opts:["A chore","One of her love languages","Something she avoids","Just for special occasions"], correct:1},
+  {q:"What type of diet does Kimmy follow?", opts:["Keto","Vegan","Pescatarian","Carnivore"], correct:1},
+  {q:"Where did Kimmy earn her B.S. in Nutritional Sciences?", opts:["Arizona State University","University of Arizona","Rutgers University","NYU"], correct:1},
+  {q:"Which Arizona city came before Tucson?", opts:["Flagstaff","Phoenix","Yuma","Sedona"], correct:1},
+  {q:"What does Kimmy do as a Graduate Teaching Assistant, on top of research?", opts:["Coach basketball","Teach","Manage a restaurant","Run a lab store"], correct:1},
+  {q:"What would Kimmy pick: kayaking or shopping?", opts:["Kayaking","Shopping","Neither","Both equally"], correct:0},
+];
+let quizIndex=0, quizCorrect=0;
+function renderQuiz(){
+  const item = quizQuestions[quizIndex];
+  const card = document.getElementById('quizCard');
+  card.innerHTML = `<h3>${item.q}</h3>` +
+    item.opts.map((o,i)=>`<button class="qopt" data-i="${i}">${o}</button>`).join('') +
+    `<div class="qfeedback" id="qFeedback"></div>
+     <div class="quizfoot"><span>Question ${quizIndex+1} of ${quizQuestions.length}</span><span>Score: ${quizCorrect}</span></div>`;
+  document.getElementById('quizProgressFill').style.width = `${(quizIndex/quizQuestions.length)*100}%`;
+  card.querySelectorAll('.qopt').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      card.querySelectorAll('.qopt').forEach(b=>b.disabled=true);
+      const i = Number(btn.dataset.i);
+      const correctBtn = card.querySelector(`.qopt[data-i="${item.correct}"]`);
+      if(i===item.correct){
+        btn.classList.add('correct');
+        document.getElementById('qFeedback').textContent = "You know me 😌";
+        quizCorrect++;
+      }else{
+        btn.classList.add('incorrect');
+        correctBtn.classList.add('correct');
+        document.getElementById('qFeedback').textContent = "Were you even reading? 😂";
+      }
+      setTimeout(()=>{
+        quizIndex++;
+        if(quizIndex < quizQuestions.length){ renderQuiz(); }
+        else{ finishQuiz(); }
+      }, 900);
+    });
+  });
+}
+function finishQuiz(){
+  document.getElementById('quizProgressFill').style.width = '100%';
+  const pct = quizCorrect / quizQuestions.length;
+  if(pct >= 0.8){
+    setStage('stage2');
+    renderStage2();
+  }else{
+    setStage('stageFail');
+  }
+}
+function setStage(id){
+  document.querySelectorAll('.stage').forEach(s=>s.classList.toggle('current', s.id===id));
+  window.scrollTo({top:document.getElementById('quiz').offsetTop-70,behavior:'smooth'});
+}
+document.getElementById('studyAgainBtn').addEventListener('click',()=>{
+  goTo('story');
+});
+renderQuiz();
+ 
+/* ============================================================
+   QUIZ — Stage 2: Would Kimmy Choose This
+   ============================================================ */
+const stage2Data = [
+  {q:"Saturday morning:", a:"Sleep until noon and order fast food.", b:"Go hiking and later cook something good.", correct:"b"},
+  {q:"Weekend activity:", a:"Kayaking.", b:"Sitting inside a casino all day.", correct:"a"},
+  {q:"Dinner tonight:", a:"Coconut chickpea curry with fresh herbs.", b:"A plain cheese quesadilla from a gas station.", correct:"a"},
+];
+let s2Index=0;
+function renderStage2(){
+  const card = document.getElementById('stage2Card');
+  if(s2Index >= stage2Data.length){
+    card.innerHTML = `<h3>You clearly know your Kimmy scenarios.</h3><p style="margin-top:10px;">One more challenge before you're certified.</p>
+      <div class="center mt40"><button class="btn gold" id="toKitchen">Continue →</button></div>`;
+    document.getElementById('toKitchen').addEventListener('click',()=>{ setStage('stage3'); });
+    return;
+  }
+  const item = stage2Data[s2Index];
+  card.innerHTML = `<h3>${item.q}</h3>
+    <button class="wkr-opt qopt" data-k="a" style="display:block;margin-bottom:10px;">${item.a}</button>
+    <button class="wkr-opt qopt" data-k="b" style="display:block;">${item.b}</button>
+    <div class="qfeedback" id="s2Feedback"></div>`;
+  card.querySelectorAll('[data-k]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      card.querySelectorAll('[data-k]').forEach(b=>b.disabled=true);
+      const correctBtn = card.querySelector(`[data-k="${item.correct}"]`);
+      correctBtn.classList.add('correct');
+      if(btn.dataset.k!==item.correct) btn.classList.add('incorrect');
+      document.getElementById('s2Feedback').textContent = btn.dataset.k===item.correct ? "Exactly right." : "Close, but not quite Kimmy's move.";
+      setTimeout(()=>{ s2Index++; renderStage2(); }, 900);
+    });
+  });
+}
+ 
+/* ============================================================
+   COOKING GAME
+   ============================================================ */
+document.getElementById('enterKitchenBtn').addEventListener('click',()=>{
+  document.getElementById('cookingIntro').style.display='none';
+  document.getElementById('dishStep').style.display='block';
+  renderDishGrid();
+});
+ 
+const dishOptions = [
+  {name:"Creamy Coconut Chickpea Curry", correct:true},
+  {name:"Spaghetti Bolognese", correct:false},
+  {name:"Cheese Quesadillas", correct:false},
+];
+function renderDishGrid(){
+  const grid = document.getElementById('dishGrid');
+  grid.innerHTML='';
+  dishOptions.forEach(d=>{
+    const btn=document.createElement('button');
+    btn.className='dish-opt';
+    btn.textContent=d.name;
+    btn.addEventListener('click',()=>{
+      if(d.correct){
+        document.getElementById('dishStep').style.display='none';
+        document.getElementById('recipeStep').style.display='block';
+      }else{
+        document.getElementById('dishHint').textContent = "Not quite Kimmy's pick — think plant-based and cozy.";
+      }
+    });
+    grid.appendChild(btn);
+  });
+}
+ 
+document.getElementById('startCookingBtn').addEventListener('click',()=>{
+  document.getElementById('recipeStep').style.display='none';
+  document.getElementById('kitchenStep').style.display='block';
+  buildKitchen();
+});
+ 
+/* correct order + distractors */
+const correctOrder = ["Onion","Garlic","Curry spices","Tomatoes","Chickpeas","Coconut milk","Spinach","Lime"];
+const distractors = ["Chocolate syrup","Marshmallows","Random cereal","Cheese","Fish"];
+let potStep = 0;
+function buildKitchen(){
+  potStep = 0;
+  const bank = document.getElementById('ingredientBank');
+  bank.innerHTML='';
+  const all = [...correctOrder, ...distractors].sort(()=>Math.random()-.5);
+  all.forEach(name=>{
+    const chip=document.createElement('div');
+    chip.className='ing-chip';
+    chip.textContent=name;
+    chip.draggable=true;
+    chip.dataset.name=name;
+    chip.addEventListener('dragstart',e=>{ e.dataTransfer.setData('text/plain', name); });
+    bank.appendChild(chip);
+  });
+  const checklist = document.getElementById('checklist');
+  checklist.innerHTML = correctOrder.map(n=>`<li data-name="${n}">${n}</li>`).join('');
+  document.getElementById('potLiquid').style.height='0%';
+  document.getElementById('orderHint').textContent='';
+  document.getElementById('cookhint');
+}
+const potZone = document.getElementById('potZone');
+potZone.addEventListener('dragover',e=>{ e.preventDefault(); potZone.classList.add('dragover'); });
+potZone.addEventListener('dragleave',()=> potZone.classList.remove('dragover'));
+potZone.addEventListener('drop',e=>{
+  e.preventDefault();
+  potZone.classList.remove('dragover');
+  const name = e.dataTransfer.getData('text/plain');
+  const hint = document.getElementById('orderHint');
+  if(!name) return;
+ 
+  if(!correctOrder.includes(name)){
+    hint.textContent = `${name} does not belong anywhere near this curry. 😅`;
+    return;
+  }
+  const expected = correctOrder[potStep];
+  if(name === expected){
+    potStep++;
+    const chip = document.querySelector(`.ing-chip[data-name="${name}"]`);
+    if(chip) chip.classList.add('used');
+    document.querySelector(`.checklist li[data-name="${name}"]`).classList.add('done');
+    document.getElementById('potLiquid').style.height = `${(potStep/correctOrder.length)*85}%`;
+    document.getElementById('steamEl').classList.toggle('on', potStep>2);
+    hint.textContent='';
+    if(potStep === correctOrder.length){
+      setTimeout(()=>{
+        document.getElementById('kitchenStep').style.display='none';
+        document.getElementById('timerStep').style.display='block';
+        runTimer();
+      }, 500);
+    }
+  }else{
+    hint.textContent = `Hmm… Kimmy thinks we skipped something — try "${expected}" first. 👀`;
+  }
+});
+ 
+function runTimer(){
+  const label = document.getElementById('timerLabel');
+  let t=6;
+  label.textContent = `Letting it simmer… ${t}s`;
+  const iv = setInterval(()=>{
+    t--;
+    if(t<=0){
+      clearInterval(iv);
+      document.getElementById('timerStep').style.display='none';
+      document.getElementById('platingStep').style.display='block';
+      return;
+    }
+    label.textContent = `Letting it simmer… ${t}s`;
+  },1000);
+}
+ 
+/* plating */
+let plated=false;
+const dishTokenEl = document.getElementById('dishToken');
+const bowlZoneEl = document.getElementById('bowlZone');
+dishTokenEl.addEventListener('dragstart',e=>{ e.dataTransfer.setData('text/plain','dish'); });
+bowlZoneEl.addEventListener('dragover',e=>{ e.preventDefault(); bowlZoneEl.classList.add('dragover'); });
+bowlZoneEl.addEventListener('dragleave',()=> bowlZoneEl.classList.remove('dragover'));
+bowlZoneEl.addEventListener('drop',e=>{
+  e.preventDefault();
+  bowlZoneEl.classList.remove('dragover');
+  if(plated) return;
+  plated=true;
+  dishTokenEl.style.display='none';
+  bowlZoneEl.innerHTML = '<div class="dish-token" style="cursor:default;">Curry ✓</div>';
+  document.getElementById('judgeBtn').style.display='inline-flex';
+});
+document.querySelectorAll('.garnish-btn').forEach(btn=>{
+  btn.addEventListener('click',()=> btn.classList.toggle('on'));
+});
+document.getElementById('judgeBtn').addEventListener('click',()=>{
+  document.getElementById('platingStep').style.display='none';
+  document.getElementById('judgeStep').style.display='block';
+  drawBadge();
+  launchConfetti();
+});
+ 
+/* badge canvas */
+function drawBadge(){
+  const c = document.getElementById('badgeCanvas');
+  const ctx = c.getContext('2d');
+  ctx.clearRect(0,0,220,220);
+  const grad = ctx.createLinearGradient(0,0,220,220);
+  grad.addColorStop(0,'#E0A233'); grad.addColorStop(1,'#1F5C56');
+  ctx.beginPath(); ctx.arc(110,110,100,0,Math.PI*2); ctx.fillStyle=grad; ctx.fill();
+  ctx.beginPath(); ctx.arc(110,110,84,0,Math.PI*2); ctx.strokeStyle='#FAF4E8'; ctx.lineWidth=3; ctx.stroke();
+  ctx.fillStyle='#FAF4E8'; ctx.textAlign='center';
+  ctx.font='700 15px sans-serif'; ctx.fillText('CERTIFIED',110,90);
+  ctx.font='700 18px serif'; ctx.fillText('KIMMY',110,116);
+  ctx.font='700 18px serif'; ctx.fillText('EXPERT',110,140);
+  ctx.font='24px sans-serif'; ctx.fillText('🍛',110,170);
+}
+document.getElementById('downloadBadge').addEventListener('click',()=>{
+  const c = document.getElementById('badgeCanvas');
+  const link = document.createElement('a');
+  link.download = 'certified-kimmy-expert-badge.png';
+  link.href = c.toDataURL('image/png');
+  link.click();
+});
+ 
+function launchConfetti(){
+  const colors = ['#E0A233','#CE6F5E','#1F5C56','#7E9B76'];
+  for(let i=0;i<60;i++){
+    const piece = document.createElement('div');
+    piece.className='confetti-piece';
+    piece.style.left = Math.random()*100+'vw';
+    piece.style.background = colors[Math.floor(Math.random()*colors.length)];
+    piece.style.animationDuration = (2.5+Math.random()*2)+'s';
+    piece.style.animationDelay = (Math.random()*.6)+'s';
+    document.body.appendChild(piece);
+    setTimeout(()=>piece.remove(), 5000);
+  }
+}
+ 
+document.getElementById('seeResultsBtn').addEventListener('click',()=>{
+  document.getElementById('finalQuizScore').textContent = `${quizCorrect} / ${quizQuestions.length}`;
+  setStage('stageFinal');
+});
+ 
+/* finale nav */
+document.getElementById('retakeQuizBtn').addEventListener('click',()=>{
+  quizIndex=0; quizCorrect=0;
+  s2Index=0;
+  document.getElementById('cookingIntro').style.display='block';
+  document.getElementById('dishStep').style.display='none';
+  document.getElementById('recipeStep').style.display='none';
+  document.getElementById('kitchenStep').style.display='none';
+  document.getElementById('timerStep').style.display='none';
+  document.getElementById('platingStep').style.display='none';
+  document.getElementById('judgeStep').style.display='none';
+  plated=false; dishTokenEl.style.display='block'; bowlZoneEl.innerHTML='';
+  document.getElementById('judgeBtn').style.display='none';
+  document.querySelectorAll('.garnish-btn').forEach(b=>b.classList.remove('on'));
+  renderQuiz();
+  setStage('stage1');
+});
+document.getElementById('exploreAgainBtn').addEventListener('click',()=> goTo('home'));
+document.getElementById('returnHomeBtn').addEventListener('click',()=> goTo('home'));
+</script>
+</body>
+</html>
+ 
