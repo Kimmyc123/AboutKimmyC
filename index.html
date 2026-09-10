@@ -1243,10 +1243,6 @@ document.getElementById('startCookingBtn').addEventListener('click',()=>{
 const correctOrder = ["Onion","Garlic","Curry spices","Tomatoes","Chickpeas","Coconut milk","Spinach","Lime"];
 const distractors = ["Chocolate syrup","Marshmallows","Random cereal","Cheese","Fish"];
 let potStep = 0;
-/* correct order + distractors */
-const correctOrder = ["Onion","Garlic","Curry spices","Tomatoes","Chickpeas","Coconut milk","Spinach","Lime"];
-const distractors = ["Chocolate syrup","Marshmallows","Random cereal","Cheese","Fish"];
-let potStep = 0;
 function buildKitchen(){
   potStep = 0;
   const bank = document.getElementById('ingredientBank');
@@ -1258,15 +1254,7 @@ function buildKitchen(){
     chip.textContent=name;
     chip.draggable=true;
     chip.dataset.name=name;
-    chip.tabIndex=0;
-    chip.setAttribute('role','button');
-    chip.setAttribute('aria-label', `Add ${name} to the pot`);
     chip.addEventListener('dragstart',e=>{ e.dataTransfer.setData('text/plain', name); });
-    // TAP/CLICK SUPPORT — lets mobile and keyboard users add an ingredient without dragging
-    chip.addEventListener('click', ()=> addIngredientToPot(name));
-    chip.addEventListener('keydown', e=>{
-      if(e.key==='Enter' || e.key===' '){ e.preventDefault(); addIngredientToPot(name); }
-    });
     bank.appendChild(chip);
   });
   const checklist = document.getElementById('checklist');
