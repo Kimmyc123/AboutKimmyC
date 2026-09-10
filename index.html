@@ -340,6 +340,22 @@ header.topnav{
 @media(max-width:760px){.two-col{grid-template-columns:1fr;}}
  
 footer.site-footer{padding:40px 0 60px;text-align:center;color:var(--ink-soft);font-size:13.5px;}
+
+.pg-item {
+  aspect-ratio: 1 / 1; /* same box shape as the other items */
+  overflow: hidden;
+  background: #f4f0ea; /* optional: fills empty space around tall image */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pg-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* shows the entire long screenshot */
+  display: block;
+}
 </style>
 </head>
 <body>
@@ -446,8 +462,8 @@ footer.site-footer{padding:40px 0 60px;text-align:center;color:var(--ink-soft);f
         <button class="tl-btn" type="button">
           <div class="tl-head"><h3>New York Beginnings</h3><span class="tl-plus">+</span></div>
           <div class="tl-body"><div class="tl-body-in">
-            <div class="mini-photo">[UPLOAD CHILDHOOD PHOTO]</div>
-            <p>My name is Kimberly, but I've gone by Kimmy for as long as I can remember. I was born in New York, and that's where the story starts — a Haitian American kid asking a lot of questions early on.</p>
+            <div class="mini-photo"><img src="https://i.imgur.com/kSTIO9Z.jpeg"></div>
+            <p>My name is Kimberly, but I have gone by Kimmy for as long as I can remember. I was born in New York, and that is where my story starts. I was a curious Black American kid who was always asking questions.</p>
           </div></div>
         </button>
       </div>
@@ -456,8 +472,8 @@ footer.site-footer{padding:40px 0 60px;text-align:center;color:var(--ink-soft);f
         <button class="tl-btn" type="button">
           <div class="tl-head"><h3>New Jersey Chapter</h3><span class="tl-plus">+</span></div>
           <div class="tl-body"><div class="tl-body-in">
-            <div class="mini-photo">[UPLOAD NY/NJ PHOTO]</div>
-            <p>Before the desert, there was New Jersey — the chapter where a lot of who I am started to take shape.</p>
+            <div class="mini-photo"><img src="https://i.imgur.com/cJe2AJq.jpeg"></div>
+            <p>New Jersey was a big part of shaping who I am. A lot of my growth started there, and it gave me experiences that stayed with me.</p>
           </div></div>
         </button>
       </div>
@@ -466,8 +482,8 @@ footer.site-footer{padding:40px 0 60px;text-align:center;color:var(--ink-soft);f
         <button class="tl-btn" type="button">
           <div class="tl-head"><h3>Hello, Arizona</h3><span class="tl-plus">+</span></div>
           <div class="tl-body"><div class="tl-body-in">
-            <div class="mini-photo">[UPLOAD ARIZONA PHOTO]</div>
-            <p>Arizona wasn't where I expected to end up, but it became one of the most important parts of my adult life.</p>
+            <div class="mini-photo"><img src="https://i.imgur.com/cr21dqK.jpeg"></div>
+            <p>Arizona was never part of the original plan, but it became one of the most important chapters of my adult life.</p>
           </div></div>
         </button>
       </div>
@@ -476,8 +492,8 @@ footer.site-footer{padding:40px 0 60px;text-align:center;color:var(--ink-soft);f
         <button class="tl-btn" type="button">
           <div class="tl-head"><h3>Phoenix Era</h3><span class="tl-plus">+</span></div>
           <div class="tl-body"><div class="tl-body-in">
-            <div class="mini-photo">[UPLOAD ARIZONA PHOTO]</div>
-            <p>I spent several years in Phoenix, building a life and figuring out what I actually wanted to study and do.</p>
+            <div class="mini-photo"><img src="https://i.imgur.com/UvfENyU.jpeg"></div>
+            <p>I spent several years in Phoenix building my life and figuring out what I truly wanted to study and do.</p>
           </div></div>
         </button>
       </div>
@@ -486,8 +502,8 @@ footer.site-footer{padding:40px 0 60px;text-align:center;color:var(--ink-soft);f
         <button class="tl-btn" type="button">
           <div class="tl-head"><h3>Tucson + Graduate School</h3><span class="tl-plus">+</span></div>
           <div class="tl-body"><div class="tl-body-in">
-            <div class="mini-photo">[UPLOAD GRADUATION PHOTO]</div>
-            <p>Eventually I made my way to Tucson, where I earned my B.S. in Nutritional Sciences and am now pursuing my PhD — asking research questions for a living.</p>
+            <div class="mini-photo"><img src="https://i.imgur.com/UvfENyU.jpeg"></div>
+            <p>Eventually I made my way to Tucson, where I earned my B.S. in Nutritional Sciences. Now I am pursuing my PhD and getting to ask research questions.</p>
           </div></div>
         </button>
       </div>
@@ -496,8 +512,8 @@ footer.site-footer{padding:40px 0 60px;text-align:center;color:var(--ink-soft);f
         <button class="tl-btn" type="button">
           <div class="tl-head"><h3>What Comes Next?</h3><span class="tl-plus">+</span></div>
           <div class="tl-body"><div class="tl-body-in">
-            <div class="mini-photo">[UPLOAD YOUR OWN PHOTO]</div>
-            <p>I love learning, exploring, creating, and understanding why people behave the way they do — so whatever's next probably involves all four.</p>
+            <div class="mini-photo"><img src="https://i.imgur.com/sC9QzGs.jpeg"></div>
+            <p>I love learning, exploring, creating, and understanding people. Whatever comes next will probably include all of that.</p>
           </div></div>
         </button>
       </div>
@@ -561,10 +577,10 @@ footer.site-footer{padding:40px 0 60px;text-align:center;color:var(--ink-soft);f
     </div>
  
     <div class="photogrid">
-      <div class="pg-item">[UPLOAD LAB PHOTO]</div>
-      <div class="pg-item">[UPLOAD CAMPUS PHOTO]</div>
-      <div class="pg-item">[UPLOAD RESEARCH PHOTO]</div>
-      <div class="pg-item">[UPLOAD GRADUATION PHOTO]</div>
+      <div class="pg-item"><img src="https://i.imgur.com/NZ7ZjKD.png"></div>
+      <div class="pg-item"><img src="https://i.imgur.com/c0ioYSJ.jpeg"></div>
+      <div class="pg-item"><img src="https://i.imgur.com/GnG3f8c.jpeg"></div>
+      <div class="pg-item"><img src="https://i.imgur.com/mpWogPR.jpeg"></div>
     </div>
   </div>
 </section>
@@ -573,7 +589,7 @@ footer.site-footer{padding:40px 0 60px;text-align:center;color:var(--ink-soft);f
 <section class="section" id="lab">
   <div class="wrap">
     <p class="kicker">Outside the Lab</p>
-    <h2>There Is Life Outside Research. I Promise.</h2>
+    <h2>Life Outside Research.</h2>
  
     <div class="hobby-grid" id="hobbyGrid">
       <!-- CHANGE HOBBY TEXT HERE -->
@@ -581,28 +597,28 @@ footer.site-footer{padding:40px 0 60px;text-align:center;color:var(--ink-soft);f
         <div class="hobby-card" data-panel="p-hike"><div class="hobby-emoji">🥾</div><h4>Hiking</h4></div>
         <div class="hobby-panel" id="p-hike">
           <p style="font-family:var(--serif);font-style:italic;color:var(--teal-deep);font-size:16px;">"Give me a trail, good weather, and a view."</p>
-          <div class="mini-photo">[UPLOAD HIKING PHOTO]</div>
+          <div class="mini-photo"><img src="https://i.imgur.com/Yln8SyU.jpeg"></div>
         </div>
       </div>
       <div>
         <div class="hobby-card" data-panel="p-kayak"><div class="hobby-emoji">🛶</div><h4>Kayaking</h4></div>
         <div class="hobby-panel" id="p-kayak">
           <p style="font-family:var(--serif);font-style:italic;color:var(--teal-deep);font-size:16px;">"Water + quiet + adventure = yes."</p>
-          <div class="mini-photo">[UPLOAD KAYAKING PHOTO]</div>
+          <div class="mini-photo"><img src="https://i.imgur.com/kI6lsrg.jpeg"></div>
         </div>
       </div>
       <div>
         <div class="hobby-card" data-panel="p-art"><div class="hobby-emoji">🎨</div><h4>Art + Music</h4></div>
         <div class="hobby-panel" id="p-art">
           <p style="font-family:var(--serif);font-style:italic;color:var(--teal-deep);font-size:16px;">"I love spaces where people create things."</p>
-          <div class="mini-photo">[UPLOAD ART OR CONCERT PHOTO]</div>
+          <div class="mini-photo"><img src="https://i.imgur.com/sl55p8X.jpeg"></div>
         </div>
       </div>
       <div>
         <div class="hobby-card" data-panel="p-write"><div class="hobby-emoji">✍️</div><h4>Writing</h4></div>
         <div class="hobby-panel" id="p-write">
           <p style="font-family:var(--serif);font-style:italic;color:var(--teal-deep);font-size:16px;">"Somewhere between scientific writing and creative writing lives my brain."</p>
-          <div class="mini-photo">[UPLOAD WRITING PHOTO]</div>
+          <div class="mini-photo"><img src="https://i.imgur.com/2RybxZ7.jpeg"></div>
         </div>
       </div>
     </div>
@@ -632,11 +648,11 @@ footer.site-footer{padding:40px 0 60px;text-align:center;color:var(--ink-soft);f
     <p class="lede">I've eaten plant-based since childhood and have been vegan for years. Cooking is one of the ways I care for people, express creativity, and connect with others.</p>
  
     <div class="food-gallery">
-      <div class="pg-item"> <img src="https://i.imgur.com/lTYGkI5.jpeg"> </div>
-      <div class="pg-item">[UPLOAD FAVORITE DISH PHOTO 2]</div>
-      <div class="pg-item">[UPLOAD FAVORITE DISH PHOTO 3]</div>
-      <div class="pg-item">[UPLOAD COOKING PHOTO]</div>
-      <div class="pg-item">[UPLOAD FOOD WITH FRIENDS PHOTO]</div>
+      <div class="pg-item"> <img src="https://i.imgur.com/yZrS1mI.jpeg"></div>
+      <div class="pg-item"><img src="https://i.imgur.com/icmnL5Q.jpeg"></div>
+      <div class="pg-item"><img src="https://i.imgur.com/UrEeh9n.jpeg"></div>
+      <div class="pg-item"><img src="https://i.imgur.com/w31Ga4F.jpeg"></div>
+      <div class="pg-item"><img src="https://i.imgur.com/aN5F50O.jpeg"></div>
     </div>
     <div class="plate-game">
       <div>
@@ -673,24 +689,24 @@ footer.site-footer{padding:40px 0 60px;text-align:center;color:var(--ink-soft);f
       <div class="fav-list">
         <div class="fav-item"><b>Preferred name:</b><span class="fav-answer">Kimmy</span></div>
         <div class="fav-item"><b>Background:</b><span class="fav-answer">Black American</span></div>
-        <div class="fav-item"><b>Biggest pet peeve:</b><span class="fav-answer">[ADD ANSWER]</span></div>
-        <div class="fav-item"><b>Something most people would never guess:</b><span class="fav-answer">[ADD ANSWER]</span></div>
+        <div class="fav-item"><b>Biggest pet peeve:</b><span class="fav-answer">Inconsiderate people</span></div>
+        <div class="fav-item"><b>Something most people would never guess:</b><span class="fav-answer">I am equally happy reading research papers and doing something completely unserious</span></div>
       </div>
     </div>
     <div class="fav-panel" id="fav-foodfav">
       <div class="fav-list">
         <div class="fav-item"><b>Diet:</b><span class="fav-answer">Vegan</span></div>
-        <div class="fav-item"><b>Favorite vegan meal:</b><span class="fav-answer">[ADD ANSWER]</span></div>
+        <div class="fav-item"><b>Favorite vegan meal:</b><span class="fav-answer">Crispy tofu tacos with avocado and lots of lime</span></div>
         <div class="fav-item"><b>Cooking is:</b><span class="fav-answer">One of my love languages</span></div>
-        <div class="fav-item"><b>Favorite food memory:</b><span class="fav-answer">[ADD ANSWER]</span></div>
+        <div class="fav-item"><b>Favorite food memory:</b><span class="fav-answer">Cooking something from scratch for people I love and watching everyone go back for seconds</span></div>
       </div>
     </div>
     <div class="fav-panel" id="fav-adventure">
       <div class="fav-list">
-        <div class="fav-item"><b>Favorite hiking trail:</b><span class="fav-answer">[ADD ANSWER]</span></div>
-        <div class="fav-item"><b>Dream travel destination:</b><span class="fav-answer">[ADD ANSWER]</span></div>
-        <div class="fav-item"><b>Favorite thing about Arizona:</b><span class="fav-answer">[ADD ANSWER]</span></div>
-        <div class="fav-item"><b>Water or trail:</b><span class="fav-answer">[ADD ANSWER]</span></div>
+        <div class="fav-item"><b>Favorite hiking trail:</b><span class="fav-answer">Seven Falls</span></div>
+        <div class="fav-item"><b>Dream travel destination:</b><span class="fav-answer">Fiji</span></div>
+        <div class="fav-item"><b>Favorite thing about Arizona:</b><span class="fav-answer">Sun Sets</span></div>
+        <div class="fav-item"><b>Water or trail:</b><span class="fav-answer">Water</span></div>
       </div>
     </div>
     <div class="fav-panel" id="fav-school">
@@ -789,7 +805,7 @@ footer.site-footer{padding:40px 0 60px;text-align:center;color:var(--ink-soft);f
               </ul>
             </div>
           </div>
-          <div class="video-ph">[UPLOAD 1-MINUTE RECIPE VIDEO HERE]</div>
+          <div class="video-ph"><iframe width="560" height="315" src="https://www.youtube.com/embed/ba53SzDSz4w?si=i4NW155gXbYm5Rhe" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
           <div class="center mt40">
             <button class="btn ghost" id="startCookingBtn">Start Cooking →</button>
           </div>
@@ -884,7 +900,7 @@ footer.site-footer{padding:40px 0 60px;text-align:center;color:var(--ink-soft);f
   </div>
 </section>
  
-<footer class="site-footer">Made with a lot of curry, curiosity, and a little bit of code — thanks for getting to know Kimmy. 🌵</footer>
+<footer class="site-footer">Made with a lot of curry, curiosity, and a little bit of code 🌵</footer>
  
 <script>
 /* ============================================================
