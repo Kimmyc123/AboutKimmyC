@@ -1339,6 +1339,38 @@ document.getElementById('judgeBtn').addEventListener('click',()=>{
   drawBadge();
   launchConfetti();
 });
+   // Shared logic used by BOTH drag-drop and tap/click
+function plateDish(){
+  if(plated) return;
+  plated=true;
+  dishTokenEl.style.display='none';
+  bowlZoneEl.innerHTML = '<div class="dish-token" style="cursor:default;">Curry ✓</div>';
+  document.getElementById('judgeBtn').style.display='inline-flex';
+}
+document.querySelectorAll('.garnish-btn').forEach(btn=>{
+  btn.addEventListener('click',()=> btn.classList.toggle('on'));
+});
+document.getElementById('judgeBtn').addEventListener('click',()=>{
+  document.getElementById('platingStep').style.display='none';
+  document.getElementById('judgeStep').style.display='block';
+  drawBadge();
+  launchConfetti();
+  playVictorySong();
+});
+ 
+// CHANGE VICTORY SONG BEHAVIOR HERE
+function playVictorySong(){
+  const song = document.getElementById('victorySong');
+  song.currentTime = 0;
+  song.volume = 0.8;
+  song.play().catch(()=>{
+    // Browsers block autoplay with sound until the user has interacted
+    // with the page — but this only runs after a button click, so it
+    // should play. This catch just prevents a console error if a file
+    // is missing or the browser blocks it anyway.
+    console.log('Victory song could not play automatically.');
+  });
+}
  
 /* badge canvas */
 function drawBadge(){
